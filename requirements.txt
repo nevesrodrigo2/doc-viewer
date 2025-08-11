@@ -1,2 +1,2 @@
 pymupdf # pdf extraction
-
+PyQt6 # gui
