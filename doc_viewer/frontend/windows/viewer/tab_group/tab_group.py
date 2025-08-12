@@ -13,15 +13,19 @@ class TabGroup(QWidget):
         self.document_paths = []
         self.doc_names = []
 
+
+
         # make the tab group scrollable
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)  
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # setup layout for the tab group
         self.container = QWidget()
         self.layout = QVBoxLayout(self.container)
 
+        self.layout.setContentsMargins(20, 10, 20, 10)
         # Add the spacer *once*
         self.layout.addSpacerItem(QSpacerItem(
             0, 0,
