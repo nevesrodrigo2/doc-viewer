@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QWidget
-from doc_viewer.frontend.windows.viewer.doc_viewer_widget import DocumentViewer
 from doc_viewer.frontend.windows.menu_bar.menu_bar import MenuBar
 from doc_viewer.frontend.windows.viewer.main_document_panel import MainDocumentPanel
 
@@ -19,10 +18,10 @@ class MainWindow(QMainWindow):
         self.main_layout = QHBoxLayout()
 
         # setup document viewer 
-        self.doc_window = MainDocumentPanel()
+        self.doc_panel = MainDocumentPanel()
         
         # setup document tab group
-        self.main_layout.addWidget(self.doc_window)
+        self.main_layout.addWidget(self.doc_panel)
 
         # setup central widget
         widget = QWidget()
@@ -33,6 +32,8 @@ class MainWindow(QMainWindow):
         print(f"Files to add: {file_paths}")
         # Logic to handle added files, e.g., update the document viewer
         for file_path in file_paths:
-            self.doc_window.add_document(file_path)
-            self.doc_window.load_documents()
+            self.doc_panel.add_document(file_path)
+
+        # Load the documents into the panel
+        self.doc_panel.load_documents()
         print("Files added to the document viewer.")
