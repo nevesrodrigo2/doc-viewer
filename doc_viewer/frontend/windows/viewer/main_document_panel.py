@@ -18,7 +18,7 @@ class MainDocumentPanel(QWidget):
         # setup document viewer
         self.doc_viewer = DocumentViewerStack()
         self.layout.addWidget(self.doc_viewer, 5)
-        self.layout.setSpacing(50)
+        self.layout.setSpacing(30)
 
         self.setLayout(self.layout)
 
