@@ -1,9 +1,12 @@
 from PySide6.QtWidgets import QMenuBar, QFileDialog
 from PySide6.QtGui import QAction
 from PySide6.QtCore import Signal
+
+from doc_viewer.frontend.events.event_bus import event_bus
+
 class MenuBar(QMenuBar):
 
-    files_added = Signal(list)
+    # files_added = Signal(list)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -32,5 +35,10 @@ class MenuBar(QMenuBar):
         )
         if file_paths:
             print(f"Selected files: {file_paths}")
-            self.files_added.emit(file_paths)
-        
+            # self.files_added.emit(file_paths)
+            self.emit_event('files_added', file_paths)
+
+    def emit_event(self, event_name, *args, **kwargs):
+        """Send an event to the event bus."""
+        event_bus.emit(event_name, *args, **kwargs)
+        print(f"Event '{event_name}' emitted with args: {args} and kwargs: {kwargs}")
