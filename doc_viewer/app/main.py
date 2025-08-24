@@ -1,27 +1,23 @@
 import argparse
-from doc_viewer.settings import config
-from doc_viewer.settings.config import set_debug, load_debug_settings
-from doc_viewer.frontend.events.event_bus import EventBus
+
+# PySide6
 from PySide6.QtWidgets import QApplication
-from doc_viewer.frontend.windows.main_window import MainWindow
+
+# Project Imports
+from doc_viewer.settings.logger import get_logger
+from doc_viewer.settings.config import APP_NAME
+from doc_viewer.ui.main_window import MainWindow
+
+# start logger
+logger = get_logger(__name__)
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--debug', action='store_true', help='Run in debug mode')
 args = parser.parse_args()
 
-# SETUP DEBUG MODE
-set_debug(args.debug)
-if args.debug:
-    # Implement loggin later
-    print("Running in debug mode")
-    load_debug_settings()
-    print(f"Debug settings loaded: {config.settings}")
-else:
-    print("Running in normal mode")
-
 app = QApplication([])
-window = MainWindow()
+window = MainWindow(APP_NAME)
 window.show()
 
 app.exec()

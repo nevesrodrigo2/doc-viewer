@@ -1,13 +1,6 @@
-import json
+APP_NAME = "doc_viewer"
 
-def set_debug(value: bool):
-    global debug
-    debug = value
+# testing/debug assets dir
+PDF_DIR = "assets/pdf"
+DOCX_DIR = "assets/docx"
 
-# def load_settings():  
-    # implement laterº
-    
-def load_debug_settings():
-    global settings
-    with open('doc_viewer/settings/debug_settings.json', 'r') as f:
-        settings = json.load(f)
