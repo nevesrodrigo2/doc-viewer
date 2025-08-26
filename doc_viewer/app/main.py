@@ -4,15 +4,15 @@ import argparse
 from PySide6.QtWidgets import QApplication
 
 # Project Imports
-from doc_viewer.settings.logger import get_logger
 from doc_viewer.settings.config import APP_NAME
 from doc_viewer.ui.main_window import MainWindow
 
 from doc_viewer.domain.models.document import DocumentController
-from doc_viewer.domain.models.folder import FolderController
+from doc_viewer.domain.models.category import categoryController
 
-# start logger
-logger = get_logger(__name__)
+# Start logger with color formatting
+from doc_viewer.settings.logger import setup_logger
+setup_logger()
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
@@ -22,8 +22,8 @@ args = parser.parse_args()
 # document controller
 doc_controller = DocumentController()
 
-# folder controller
-folder_controller = FolderController()
+# category controller
+category_controller = categoryController()
 
 # setup ui
 app = QApplication([])

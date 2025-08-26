@@ -1,1 +1,8 @@
 PySide6
+
+# Documents
+PyMuPDF
+
+# Tests
+pytest
+reportlab
