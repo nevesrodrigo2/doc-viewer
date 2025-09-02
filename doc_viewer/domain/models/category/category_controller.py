@@ -1,6 +1,7 @@
 import logging
 from  typing import Callable
 
+from doc_viewer.domain.models.category.recents_smart_category import RecentsSmartCategory
 import doc_viewer.settings.config as config
 from doc_viewer.domain.models.category.category import Category
 from .normal_category import NormalCategory
@@ -38,7 +39,6 @@ class CategoryController:
 
         self.add_smart_category(
             name=config.RECENTS_CATEGORY_NAME,
-            predicate=lambda doc: True
         )
 
     def subscribe_events(self):
@@ -56,6 +56,7 @@ class CategoryController:
                 self.add_document("Favourites", document)
             else:
                 self.remove_document("Favourites", document)
+            self.get_category("Recents").sort_documents()
         # Document added event
         elif isinstance(event, DocumentAddedEvent):
             document = event.get_document()
@@ -67,7 +68,7 @@ class CategoryController:
     def add_smart_category(
             self,
             name: str, 
-            predicate: Callable[[Document], bool]
+            predicate: Callable[[Document], bool]= lambda doc: True
     ) -> bool:
         """
         Adds a smart category.
@@ -80,7 +81,11 @@ class CategoryController:
         Returns:
             bool: True if the category was added successfully, False otherwise.
         """
-        smart_category = SmartCategory(name, predicate)
+        if name == config.RECENTS_CATEGORY_NAME:
+            smart_category = RecentsSmartCategory(name)
+        else:
+            smart_category = SmartCategory(name, predicate)
+
         if smart_category:
             logger.debug(f"Adding smart category: {name}")
             self._categories[name] = smart_category

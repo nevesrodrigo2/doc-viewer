@@ -8,7 +8,12 @@ from doc_viewer.domain.models.document.document import Document
 logger = logging.getLogger(__name__)  
 
 class SmartCategory(Category):
-    def __init__(self, name: str, predicate: Callable[[Document], bool]):
+    def __init__(
+            self, 
+            name: str, 
+            predicate: Callable[[Document], bool], 
+    ):
+                 
         super().__init__(name)
         self._predicate = predicate
 
@@ -28,3 +33,5 @@ class SmartCategory(Category):
             return super().add_document(document)
         logger.debug("Predicate failed.")
         return False
+    
+    

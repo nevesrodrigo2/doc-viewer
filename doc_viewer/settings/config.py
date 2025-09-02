@@ -11,6 +11,7 @@ DOCX_DIR = "assets/docx"
 # -------------- Category settings -----------------------
 # Recent Category settings
 RECENTS_CATEGORY_NAME = "Recents"
+# Don't know if this will be utilized
 RECENTS_DOCUMENT_LIMIT = 10
 
 # Favourites Category settings

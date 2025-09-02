@@ -31,5 +31,5 @@ def test_is_favourited(document_controller, standard_pdf, empty_pdf):
 
 def test_set_favourite(document_controller, standard_pdf):
     document_controller.add_document(standard_pdf)
-    assert document_controller.set_favourite(standard_pdf, True)
+    assert document_controller.set_favourite(standard_pdf)
     assert document_controller.is_favourited(standard_pdf)

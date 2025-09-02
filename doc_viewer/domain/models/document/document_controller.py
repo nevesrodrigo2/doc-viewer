@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from .document_factory import DocumentFactory
@@ -35,6 +36,18 @@ class DocumentController:
             return True
         logger.warning(f"Failed to add document: {file_path}")
         return False
+
+    def get_document(self, file_path: str) -> Document | None:
+        """
+        Get a document by file path.
+
+        Args:
+            file_path (str): The path of the document to retrieve.
+
+        Returns:
+            Document | None: The document if found, None otherwise.
+        """
+        return self.get_documents().get(file_path)
 
     def remove_document(self, file_path: str) -> bool:
         """
@@ -79,25 +92,50 @@ class DocumentController:
         logger.error(f"Document not found: {file_path}")
         return False
 
-    def set_favourite(self, file_path: str, is_favourited: bool) -> bool:
+    def set_favourite(
+            self, 
+            file_path: str
+    ) -> bool:
         """
         Set the favourite status of a document.
 
         Args:
             file_path (str): The path of the document to update.
-            is_favourited (bool): The new favourite status.
 
         Returns:
             bool: True if the favourite status was updated, False otherwise.
         """
         if file_path in self._documents:
-            self._documents[file_path].set_favourite(is_favourited)
-            logger.debug(f"Document {self._documents[file_path].get_title()} "
-                         f"favourite status set to {is_favourited}.")
+            doc = self.get_document(file_path)
+            doc.set_favourite(not doc.is_favourited())
+
+            logger.debug(f"Document {doc.get_title()} "
+                         f"favourite status set to {doc.is_favourited()}.")
             logger.debug("Emitting DocumentFavouritedEvent...")
             event_bus.emit(
-                DocumentFavouritedEvent(self._documents[file_path])
+                DocumentFavouritedEvent(doc)
             )
+            doc.set_last_interacted_at()
+            return True
+        logger.error(f"Document not found: {file_path}")
+        return False
+
+    def set_last_interacted_at(
+            self, 
+            file_path: str, 
+            timestamp: datetime.datetime = datetime.datetime.now()
+    ) -> bool:
+        """
+        Set the last interacted timestamp for a document.
+
+        Args:
+            file_path (str): The path of the document to update.
+            timestamp (datetime): The timestamp to set.
+        """
+        if file_path in self._documents:
+            self._documents[file_path].set_last_interacted_at(timestamp)
+            logger.debug(f"Document {self._documents[file_path].get_title()} "
+                         f"last interacted at set to {timestamp}.")
             return True
         logger.error(f"Document not found: {file_path}")
         return False

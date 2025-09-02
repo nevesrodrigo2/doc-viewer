@@ -66,3 +66,10 @@ class Document:
     def get_last_interacted_at(self) -> datetime.datetime:
         """Get the last interacted at timestamp of the document."""
         return self.last_interacted_at
+    
+    def __repr__(self):
+        representation = (
+            f"Document(title={self.get_title()}," 
+            f"path={self.get_file_path()})"
+        )
+        return representation
