@@ -6,3 +6,5 @@ PyMuPDF
 # Tests
 pytest
 reportlab
+
+setuptools

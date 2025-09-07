@@ -5,22 +5,26 @@ def test_add_document(normal_category, standard_document):
 
     result = normal_category.add_document(standard_document)
     assert result is True
-    assert len(normal_category.get_documents()) == 1
-    assert normal_category.get_documents()[0].get_title() == "My PDF"
+    documents = normal_category.get_documents()
+    assert len(documents) == 1
+    first_doc = next(iter(documents.values()))
+    assert first_doc.get_title() == "My PDF"
 
 def test_add_document_failure(normal_category, standard_document):
     # Simulate a failure scenario
     normal_category.add_document(standard_document)
     result = normal_category.add_document(standard_document)
+    documents = normal_category.get_documents()
     assert result is False
-    assert len(normal_category.get_documents()) == 1
+    assert len(documents) == 1
 
 def test_remove_document(normal_category, standard_document):
 
     normal_category.add_document(standard_document)
     result = normal_category.remove_document(standard_document)
+    documents = normal_category.get_documents()
     assert result is True
-    assert len(normal_category.get_documents()) == 0
+    assert len(documents) == 0
 
 def test_remove_document_failure(normal_category, standard_document):
     # Simulate a failure scenario
@@ -32,8 +36,10 @@ def test_remove_document_failure(normal_category, standard_document):
 def test_smart_category_add_document(smart_category, standard_document):
     result = smart_category.add_document(standard_document)
     assert result is True
-    assert len(smart_category.get_documents()) == 1
-    assert smart_category.get_documents()[0].get_title() == "My PDF"
+    documents = smart_category.get_documents()
+    assert len(documents) == 1
+    first_doc = next(iter(documents.values()))
+    assert first_doc.get_title() == "My PDF"
 
 def test_smart_category_add_document_failure(smart_category, empty_document):
     # Simulate a failure scenario

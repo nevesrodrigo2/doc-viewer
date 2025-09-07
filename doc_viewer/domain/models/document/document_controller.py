@@ -10,6 +10,10 @@ from doc_viewer.domain.events.document.document_events import(
     DocumentAddedEvent,
     DocumentRemovedEvent
 )
+from doc_viewer.ui.events.document.ui_document_events import (
+    UIDocumentEvent,
+    UIDocumentAddedEvent,
+)
 
 logger = logging.getLogger(__name__)  
 
@@ -17,7 +21,28 @@ class DocumentController:
     """Controller for managing document-related operations."""
     def __init__(self):
         self._documents = {}
+        self.subscribe_events()
 
+    def emit_event(self, event):
+        """Emit an event to the event bus."""
+        event_bus.emit(event)
+
+    def subscribe_events(self):
+        """Subscribe to relevant document events."""
+        event_bus.subscribe(UIDocumentAddedEvent, self.handle_events)
+
+    def handle_events(self, event: UIDocumentEvent):
+        """
+        Handle incoming document events.
+
+        Args:
+            event (UIDocumentEvent): The event to handle.
+        """
+        logger.debug(f"Handling {event}...")
+        if isinstance(event, UIDocumentAddedEvent):
+            file_path = event.get_document_path()
+            self.add_document(file_path)
+              
     def add_document(self, file_path: str) -> bool:
         """
         Add a document to the controller.
@@ -32,7 +57,7 @@ class DocumentController:
         if document:
             self._documents[file_path] = document
             logger.debug(f"Document added: {file_path}")
-            event_bus.emit(DocumentAddedEvent(document))
+            self.emit_event(DocumentAddedEvent(document))
             return True
         logger.warning(f"Failed to add document: {file_path}")
         return False
@@ -61,7 +86,7 @@ class DocumentController:
         """
         if file_path in self._documents:
             document = self._documents[file_path]
-            event_bus.emit(DocumentRemovedEvent(document))
+            self.emit_event(DocumentRemovedEvent(document))
             del self._documents[file_path]
             logger.debug(f"Document removed: {file_path}")
             return True
@@ -107,23 +132,25 @@ class DocumentController:
         """
         if file_path in self._documents:
             doc = self.get_document(file_path)
+
+            # set the favourite status
+            # opposite of the current fav status
             doc.set_favourite(not doc.is_favourited())
 
-            logger.debug(f"Document {doc.get_title()} "
-                         f"favourite status set to {doc.is_favourited()}.")
-            logger.debug("Emitting DocumentFavouritedEvent...")
-            event_bus.emit(
-                DocumentFavouritedEvent(doc)
+            logger.debug(
+                f"Document {doc.get_title()} "
+                f"favourite status set to {doc.is_favourited()}."
             )
-            doc.set_last_interacted_at()
+            logger.debug("Emitting DocumentFavouritedEvent...")
+            self.set_last_interacted_at(file_path)
+            self.emit_event(DocumentFavouritedEvent(doc))
             return True
         logger.error(f"Document not found: {file_path}")
         return False
 
     def set_last_interacted_at(
             self, 
-            file_path: str, 
-            timestamp: datetime.datetime = datetime.datetime.now()
+            file_path: str
     ) -> bool:
         """
         Set the last interacted timestamp for a document.
@@ -133,9 +160,11 @@ class DocumentController:
             timestamp (datetime): The timestamp to set.
         """
         if file_path in self._documents:
-            self._documents[file_path].set_last_interacted_at(timestamp)
+            self._documents[file_path].set_last_interacted_at(
+                datetime.datetime.now()
+            )
             logger.debug(f"Document {self._documents[file_path].get_title()} "
-                         f"last interacted at set to {timestamp}.")
+                         f"last interacted at set to now.")
             return True
         logger.error(f"Document not found: {file_path}")
         return False

@@ -9,7 +9,8 @@ from PySide6.QtWidgets import (
 # Project Imports
 from doc_viewer.ui.components.menu_bar import MenuBar
 from doc_viewer.ui.components.tab_group.tab_group import TabGroup
-from doc_viewer.ui.components.document_viewer.document_stack import DocumentViewerStack
+from doc_viewer.ui.main_panel import MainPanel
+
 
 class MainWindow(QMainWindow):
     """Main application window."""
@@ -25,8 +26,11 @@ class MainWindow(QMainWindow):
 
         # Create a central widget
         central_widget = QWidget()
+        central_widget.setContentsMargins(0, 0, 0, 0)
         self.setCentralWidget(central_widget)
         self.layout = QVBoxLayout(central_widget)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.setSpacing(0)
 
         # set menu bar
         self.menu_bar = MenuBar()
@@ -36,10 +40,14 @@ class MainWindow(QMainWindow):
         self.main_layout = QHBoxLayout()
         self.layout.addLayout(self.main_layout)
 
-        # tab group
+        # add tab group and document viewer stack
         self.tab_group = TabGroup()
         self.main_layout.addWidget(self.tab_group, 1)
-        # document viewer stack
-        self.doc_viewer_stack = DocumentViewerStack()
-        self.main_layout.addWidget(self.doc_viewer_stack, 4)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_layout.setSpacing(0)
+        self.main_panel = MainPanel()
+        self.main_layout.addWidget(self.main_panel, 6)
 
+        library = self.tab_group.tree_widget.library
+        library_thumbnail_panel = library.get_thumbnail_panel()
+        self.main_panel.set_thumbnail_panel(library_thumbnail_panel)
