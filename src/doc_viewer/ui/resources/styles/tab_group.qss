@@ -1,10 +1,9 @@
 QTreeWidget {
     background-color: #292c37;
     color: #d4d4d4;
-    border: none;
+    border: 1px solid black;
 }
 
 #DocumentCounter {
     background-color: #23252e;
-    border: none;
 }

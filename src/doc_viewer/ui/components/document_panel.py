@@ -32,13 +32,14 @@ class DocumentPanel(QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.setSpacing(0)
-
-        # tool bar
-        self.tool_bar = ToolBar()
-        self.layout.addWidget(self.tool_bar)
+        
         # document viewer
         self.doc_viewer = DocumentViewer()
         self.layout.addWidget(self.doc_viewer)
+        # tool bar
+        self.tool_bar = ToolBar()
+        self.layout.addWidget(self.tool_bar)
+        
 
         self.subscribe_events()
 

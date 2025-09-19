@@ -4,3 +4,30 @@ QMenuBar {
     font-family: "monospace";
     font-size: 14px;
 }
+
+QMenuBar::item {
+    background-color: #23252e;
+    padding: 5px 10px;
+    margin: 0px;
+}
+
+/* Highlight selected menu bar item */
+QMenu {
+    background-color: #23252e;
+    color: #e0e0e0;
+    border: 1px solid #3c3f4a;
+    font-family: "monospace";
+    font-size: 14px;
+}
+
+/* Style for menu items */
+QMenu::item {
+    padding: 5px 20px;
+    margin: 0px;
+}
+
+/* Highlight selected menu item */
+QMenu::item:selected {
+    background-color: #3aa0a0;
+    margin: 0px;
+}

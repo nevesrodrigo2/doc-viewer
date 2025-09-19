@@ -21,7 +21,7 @@ class TabGroup(QWidget):
 
         # add tree widget and document counter
         self.tree_widget = TreeWidget()
-        self.layout.addWidget(self.tree_widget, 4)
+        self.layout.addWidget(self.tree_widget, 5)
         
         # add document counter
         self.document_counter = DocumentCounter()

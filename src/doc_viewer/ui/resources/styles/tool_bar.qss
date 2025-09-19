@@ -1,0 +1,10 @@
+QToolBar {
+    background: #23252e;
+    border: 1px solid black;
+    spacing: 0px;
+    padding: 0px;
+}
+
+QToolButton {
+    padding: 5px;
+}
