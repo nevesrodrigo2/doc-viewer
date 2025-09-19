@@ -1,6 +1,7 @@
 # PySide6 Imports
-from PySide6.QtWidgets import QLabel
+from PySide6.QtWidgets import QLabel, QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
 
 # Project Imports
 from doc_viewer.ui.events.document.ui_document_events import (
@@ -15,11 +16,19 @@ class Thumbnail(QLabel):
 
     def __init__(self, document_path: str, pixmap, parent=None):
         super().__init__(parent)
+        self.setObjectName("thumbnail")
         self.setPixmap(pixmap)
         self.setAlignment(Qt.AlignCenter)
-        self.setFixedSize(150, 200)  # Fixed size for thumbnails
-        self.setStyleSheet("border: 1px solid black; margin: 5px;")
+        self.setFixedSize(150, 200)  
+        self.setMouseTracking(True)  # Needed for hover
+        self.setAutoFillBackground(True)
+
         self._document_path = document_path
+
+        self.shadow = QGraphicsDropShadowEffect(blurRadius=15, xOffset=0, yOffset=0)
+        self.shadow.setColor(QColor(255, 255, 255, 200))  # white glow
+        self.shadow.setEnabled(False)
+        self.setGraphicsEffect(self.shadow)
 
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.LeftButton:

@@ -8,6 +8,9 @@ DOCX_DIR = "assets/docx"
 # UI
 # Icons
 ICON_PATH = "src/doc_viewer/ui/resources/icons/"
+
+# Stylesheet paths
+QSS_PATH = "src/doc_viewer/ui/resources/styles/"
 # -------------- Document settings -----------------------
 
 

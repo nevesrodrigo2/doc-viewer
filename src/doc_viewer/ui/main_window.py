@@ -22,8 +22,18 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle(app_name)
 
+        self.setup_stylesheet()
         self.setup_main_window()
         self.show()
+
+    def setup_stylesheet(self):
+        """Load and apply all QSS files in QSS_PATH."""
+        full_style = ""
+        for style_file in os.listdir(config.QSS_PATH):
+            if style_file.endswith(".qss"):
+                with open(os.path.join(config.QSS_PATH, style_file), "r") as f:
+                    full_style += f.read() + "\n"
+        self.setStyleSheet(full_style)
 
     def setup_main_window(self):
         """Setup the main window layout and components."""

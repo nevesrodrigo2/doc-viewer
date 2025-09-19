@@ -1,0 +1,13 @@
+#ThumbnailPanel {
+    background-color: #13151a;
+    border: none;
+}
+
+#thumbnail {
+    border: 1px solid black;
+    margin: 5px;
+    background-color: white;
+}
+#thumbnail:hover {
+    border: 2px solid white;         
+}

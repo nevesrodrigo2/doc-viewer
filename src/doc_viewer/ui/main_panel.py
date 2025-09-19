@@ -28,6 +28,8 @@ class MainPanel(QWidget):
     """Main panel containing the document viewer stack."""
     def __init__(self):
         super().__init__()
+
+        self.setObjectName("MainPanel")
         # set keyboard focus
         self.setFocusPolicy(Qt.StrongFocus)
         # setup layout

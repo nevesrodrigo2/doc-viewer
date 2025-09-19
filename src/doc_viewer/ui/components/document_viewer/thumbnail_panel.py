@@ -20,20 +20,26 @@ class ThumbnailPanel(QWidget):
     """
     def __init__(self):
         super().__init__()
+
         self._thumbnail_viewers = []
 
         # Create a scrollable area
         scroll = QScrollArea(self)
         scroll.setWidgetResizable(True)
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
         layout.addWidget(scroll)
 
         # Container inside the scroll area
         self.container = QWidget()
+        self.container.setObjectName("ThumbnailPanel")
+
 
         self.grid_layout = QGridLayout(self.container)
+        self.grid_layout.setContentsMargins(12, 12, 12, 12)
         self.grid_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-
+        self.grid_layout.setSpacing(12)
         scroll.setWidget(self.container)
 
         # Keep track of grid positions

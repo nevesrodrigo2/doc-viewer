@@ -1,0 +1,6 @@
+QMenuBar {
+    background-color: #23252e;
+    color: #e0e0e0;
+    font-family: "monospace";
+    font-size: 14px;
+}

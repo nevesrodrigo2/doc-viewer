@@ -48,5 +48,14 @@ class DocumentCatalog:
             dict: A dictionary of all documents in the catalog.
         """
         return self.documents
+    
+    def get_document_count(self) -> int:
+        """
+        Get the count of documents in the catalog.
+
+        Returns:
+            int: The number of documents in the catalog.
+        """
+        return len(self.documents)
 
 document_catalog = DocumentCatalog()
